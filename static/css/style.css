@@ -1,0 +1,72 @@
+.header {
+    background-image: linear-gradient(120deg, #155799, #159957);
+    color: white;
+}
+
+.main {
+    min-width: 360px; 
+    max-width: 800px;
+    margin: 1em auto;
+    color: #159957;
+}
+
+.error-msg {
+    color:red;
+}
+
+.nav-pills >li > a {
+    color: #159957;
+    font-weight: bold;
+}
+.nav-pills > li > a.active {
+    background-image: linear-gradient(120deg, #155799, #159957) !important;
+    color: #ffffff !important;
+    border-color: #454d55 !important;
+}
+
+.invite-user-button {
+    width:40%;
+}
+
+.green {
+    color: #159957;
+    font-weight: bold;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.border {
+    padding: 2%;
+}
+
+a, a:hover {
+    text-decoration: none !important;
+    color:  #159957;
+}
+
+
+.green-color {
+    color:  #159957;
+}
+
+.red {
+    color: red;
+}
+
+.hospital-img {
+    max-width: 500px;
+}
+
+.back-btn
+{
+    background-image: linear-gradient(120deg, #155799, #159957);
+    color : white;
+}
+
+
+
+
+  
+  

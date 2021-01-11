@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <title>Hospital Pricing</title>
+  </head>
+  <body>
+
+    <div class="jumbotron header">
+        <h1 class="display-4 text-center text-uppercase" >Hospital Pricing</h1>
+        <h3 class="text-center text-uppercase" >Trusted Commitee</h3>
+    </div>
+
+    <div class="container main mb-4">
+
+        <div class="dashboard d-flex justify-content-between mb-2">
+          <h2><a href="/trusted-commitee">Trusted Commitee Dashboard</a></h2>
+          <div class="dropdown">
+            <button class="btn btn-outline-success dropdown-toggle green" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{user['name']}}
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="/trusted-commitee/user/my_profile">View profile</a>
+              <a class="dropdown-item" href="/logout">Logout</a>
+            </div>
+          </div>
+        </div>
+        
+        <ul class="nav nav-pills nav-justified mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" data-toggle="pill" href="#pills-users" role="tab">Commitee Members</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" data-toggle="pill" href="#pills-hospitals" role="tab">Hospital Data</a>
+        </li>
+        </ul>
+
+        <div class="tab-content" id="pills-tabContent">
+
+            <div class="table-div tab-pane fade show active" id="pills-users" role="tabpanel">
+
+              <div class="mx-auto invite-user-button mb-2" id="invite-button"><button class="btn btn-block btn-outline-success mb-2 bold" onclick="copy_show()">Invite Member</button></div>
+              <div id="invite" style="display: none;">
+              <div class="form-group row" id="invite">
+                <label for="url" class="col-sm-2 col-form-label mb-2 bold">Invite URL</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control mb-2" id="url" value="http://127.0.0.1:5000/trusted-commitee/join/{{user['referral_id']}}">
+                </div>
+                <div class="col-sm-2"><button class="btn btn-success btn-block mb-2 bold" id="copy-button" onclick="copy()">Copy</button></div>
+              </div>
+              </div>
+
+              <table class="table table-hover">
+              <thead>
+                  <tr>
+                      <th>Name</th>
+                      <th>City</th>
+                  </tr>
+              </thead>
+              <tbody>
+                
+                  {% for user in users_list %}
+                  <tr style="transform: rotate(0);">
+                      <th scope="row"><a href="/trusted-commitee/user/{{user['_id']}}" class="stretched-link"></a>{{user['name']}}</th>
+                      <th>{{user['city']}}</th>
+                  </tr>
+                  {%endfor%}
+                  {% set _stub = users_list.rewind() %}
+              </tbody>
+              </table>
+            </div>
+
+            <div class="table-div tab-pane fade show" id="pills-hospitals" role="tabpanel">
+              <div class="mx-auto invite-user-button mb-2"><a href="http://127.0.0.1:5000/trusted-commitee/add-hospital" class="noline"><button class="btn btn-block btn-outline-success mb-2 bold">Add Hospital</button></a></div>
+              <table class="table table-hover">
+              <thead>
+                  <tr>
+                      <th>Name</th>
+                      <th>City</th>
+                  </tr>
+              </thead>
+              <tbody>
+                {% for hospital in hospitals_list %}
+                <tr style="transform: rotate(0);">
+                  <th scope="row"><a href="/trusted-commitee/hospital/{{hospital['_id']}}" class="stretched-link"></a>{{hospital['hospital_name']}}</th>
+                    <th>{{hospital['city']}}</th>
+                </tr>
+                {% endfor %}
+                {% set _stub = users_list.rewind() %}
+              </tbody>
+              </table>
+              </div>
+            </div>
+        </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script>
+      function copy () {
+            var copyText = document.getElementById("url");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999)
+            document.execCommand("copy");
+            var copybutton = document.getElementById("copy-button");
+            copybutton.innerHTML = "Copied"
+        }
+        function copy_show () {
+            var button = document.getElementById("invite-button");
+            button.style.display = 'None'
+            var invite = document.getElementById("invite");
+            invite.style.display = 'block'
+        }
+        jQuery(document).ready(function($) {
+            $(".clickable-row").click(function() {
+                window.location = $(this).data("href");
+            });
+        });
+    </script>
+  </body>
+</html>
